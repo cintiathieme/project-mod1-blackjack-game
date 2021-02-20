@@ -24,43 +24,244 @@ const cards = [
     {name: 'asespada',value: 11, img:'./images/as-de-espada.png'},
 ];
 
+const firstPage = document.querySelector('#firstPage');
+const gameBoard = document.querySelector('#gameBoard');
 
-document.querySelector('#baralho').addEventListener('click', () => {
+document.querySelector('.play').addEventListener('click', () => {
+
+    firstPage.className = "hide";
+    gameBoard.className = "show";
+})
+
+let start = document.querySelector('.start')
+
+start.addEventListener('click', function click () {
+    start.removeEventListener('click',click);
+    
     const game = new Game(cards);
 
   
     const shuffleCards = game.shuffleCards();
 
+    console.log(shuffleCards)
+
+    
     let dealer = `<div class="card" data-card-name="${shuffleCards.cardsDealer[0].name}">
-         <div class="back" name="${shuffleCards.cardsDealer[0].img}"></div>
-         <div class="front" style="background: url(${shuffleCards.cardsDealer[0].img}) no-repeat"></div>
+        <img id="hideCard" class="show" src="./images/baralho.png">
         </div>
         <div class="card" data-card-name="${shuffleCards.cardsDealer[1].name}">
-        <div class="back" name="${shuffleCards.cardsDealer[1].img}"></div>
-        <div class="front" style="background: url(${shuffleCards.cardsDealer[1].img}) no-repeat"></div>
+        <img class="show" src="${shuffleCards.cardsDealer[1].img}">
+        </div>
         </div>`;
 
         document.querySelector('#dealer').innerHTML = dealer;
 
     
     let player = `<div class="card" data-card-name="${shuffleCards.cardsPlayer[0].name}">
-    <div class="back" name="${shuffleCards.cardsPlayer[0].img}"></div>
-    <div class="front" style="background: url(${shuffleCards.cardsPlayer[0].img}) no-repeat"></div>
+    <img class="show" src="${shuffleCards.cardsPlayer[0].img}">
+    </div>
     </div>
     <div class="card" data-card-name="${shuffleCards.cardsPlayer[1].name}">
-    <div class="back" name="${shuffleCards.cardsPlayer[1].img}"></div>
-    <div class="front" style="background: url(${shuffleCards.cardsPlayer[1].img}) no-repeat"></div>
+    <img class="show" src="${shuffleCards.cardsPlayer[1].img}">
+    </div>
     </div>`;
 
     document.querySelector('#player').innerHTML = player;
 
-    let selectedCards = [shuffleCards.cardsPlayer[0].value, shuffleCards.cardsPlayer[1].value, shuffleCards.cardsDealer[0].value, shuffleCards.cardsDealer[0].value]
-
-    console.log(selectedCards)
-
-    game.checkIf21()
+    let playersHand = [shuffleCards.cardsPlayer[0].value, shuffleCards.cardsPlayer[1].value]
     
+    let dealersHand = [shuffleCards.cardsDealer[0].value, shuffleCards.cardsDealer[1].value]
 
+    if (game.checkIf21(playersHand)) {
+        let win = '<img src="./images/winner.png">'
+    
+            setTimeout(() => {
+    
+                document.querySelector('section').innerHTML = win;
+            },1000)
+
+            game.endGame();
+    }
+
+    if (game.checkIf21(dealersHand)) {
+
+        let lose = '<img src="./images/loser.png">'
+        
+                setTimeout(() => {
+        
+                    document.querySelector('section').innerHTML = lose;
+                },1000)
+    
+                game.endGame();
+    }
+
+    document.querySelector('.stand').addEventListener('click', () => {
+        let hitDisable = `<div class="buttonDisable">Hit</div>`;
+        document.querySelector('#hit').innerHTML = hitDisable;
+
+        let standDisable = `<div class="buttonDisable">Stand</div>`;
+        document.querySelector('#stand').innerHTML = standDisable;
+
+    let sumPlayer = game.sumCards(playersHand);
+    let addPlayersPoints = `<div class="points"> ${sumPlayer}</div>`
+        document.querySelector('#playerSum').innerHTML = addPlayersPoints;
+     
+    let sumDealer = game.sumCards(dealersHand)
+
+    if (sumDealer <= 11) {
+        let dealer2 = `<div class="card" data-card-name="${shuffleCards.card3Dealer[0].name}">
+        <img class="show" src="${shuffleCards.card3Dealer[0].img}">
+        </div>
+        </div>`
+        document.querySelector('#dealer2').innerHTML = dealer2;
+
+        let card3Dealer = shuffleCards.card3Dealer[0].value;
+
+        dealersHand.push(card3Dealer)
+        
+        sumDealer += card3Dealer
+    }
+  
+    let addDealersPoints = `<div class="points"> ${sumDealer}</div>`
+    document.querySelector('#dealerSum').innerHTML = addDealersPoints;
+
+        
+        let compare = game.compareCards(sumPlayer,sumDealer)
+
+        if (!compare) {
+            let dealer = `<div class="card" data-card-name="${shuffleCards.cardsDealer[0].name}">
+            <img id="hideCard" class="show" src="${shuffleCards.cardsDealer[0].img}">
+                
+            </div>
+            <div class="card" data-card-name="${shuffleCards.cardsDealer[1].name}">
+            <img class="show" src="${shuffleCards.cardsDealer[1].img}">
+            </div>
+            </div>`;
+    
+            document.querySelector('#dealer').innerHTML = dealer;
+    
+            let lose = '<img src="./images/loser.png">'
+    
+            setTimeout(() => {
+    
+                document.querySelector('section').innerHTML = lose;
+            },1000)
+
+            game.endGame();
+
+        } else {
+            let dealer = `<div class="card" data-card-name="${shuffleCards.cardsDealer[0].name}">
+            <img id="hideCard" class="show" src="${shuffleCards.cardsDealer[0].img}">
+                
+            </div>
+            <div class="card" data-card-name="${shuffleCards.cardsDealer[1].name}">
+            <img class="show" src="${shuffleCards.cardsDealer[1].img}">
+            </div>
+            </div>`;
+    
+            document.querySelector('#dealer').innerHTML = dealer;
+
+            let win = '<img src="./images/winner.png">'
+    
+            setTimeout(() => {
+    
+                document.querySelector('section').innerHTML = win;
+            },1000)
+
+            game.endGame();
+        }
+        
+    });
+
+    document.querySelector('.hit').addEventListener('click', () => {
+        let hitDisable = `<div class="buttonDisable">Hit</div>`;
+        document.querySelector('#hit').innerHTML = hitDisable;
+
+        let standDisable = `<div class="buttonDisable">Stand</div>`;
+        document.querySelector('#stand').innerHTML = standDisable;
+        
+        let player2 = `<div class="card" data-card-name="${shuffleCards.card3Player[0].name}">
+        <img class="show" src="${shuffleCards.card3Player[0].img}">
+        </div>
+        </div>`
+    document.querySelector('#player2').innerHTML = player2;
+
+    let card3Player = shuffleCards.card3Player[0].value
+
+    playersHand.push(card3Player)
+
+    let sumPlayer = game.sumCards(playersHand)
+        
+    let addPlayersPoints = `<div class="points"> ${sumPlayer}</div>`
+    document.querySelector('#playerSum').innerHTML = addPlayersPoints;
+
+    let sumDealer = game.sumCards(dealersHand)
+
+    if (sumDealer <= 11) {
+        let dealer2 = `<div class="card" data-card-name="${shuffleCards.card3Dealer[0].name}">
+        <img class="show" src="${shuffleCards.card3Dealer[0].img}">
+        </div>
+        </div>`
+        document.querySelector('#dealer2').innerHTML = dealer2;
+
+        let card3Dealer = shuffleCards.card3Dealer[0].value;
+
+        dealersHand.push(card3Dealer)
+        
+        sumDealer += card3Dealer
+    }
+    
+    let addDealersPoints = `<div class="points"> ${sumDealer}</div>`
+    document.querySelector('#dealerSum').innerHTML = addDealersPoints;
+
+    let compare = game.compareCards(sumPlayer,sumDealer)
+
+
+    if (!compare) {
+        let dealer = `<div class="card" data-card-name="${shuffleCards.cardsDealer[0].name}">
+        <img id="hideCard" class="show" src="${shuffleCards.cardsDealer[0].img}">
+            
+        </div>
+        <div class="card" data-card-name="${shuffleCards.cardsDealer[1].name}">
+        <img class="show" src="${shuffleCards.cardsDealer[1].img}">
+        </div>
+        </div>`;
+
+        document.querySelector('#dealer').innerHTML = dealer;
+
+        let lose = '<img src="./images/loser.png">'
+
+        setTimeout(() => {
+
+            document.querySelector('section').innerHTML = lose;
+        },1000)
+        game.endGame();
+
+    } else {
+        let dealer = `<div class="card" data-card-name="${shuffleCards.cardsDealer[0].name}">
+            <img id="hideCard" class="show" src="${shuffleCards.cardsDealer[0].img}">
+                
+            </div>
+            <div class="card" data-card-name="${shuffleCards.cardsDealer[1].name}">
+            <img class="show" src="${shuffleCards.cardsDealer[1].img}">
+            </div>
+            </div>`;
+    
+            document.querySelector('#dealer').innerHTML = dealer;
+        let win = '<img src="./images/winner.png">'
+
+        setTimeout(() => {
+
+            document.querySelector('section').innerHTML = win;
+        },1000)
+        
+        game.endGame();
+    }
+    
+      
+    })    
+    
 })
+
 
 

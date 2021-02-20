@@ -1,8 +1,9 @@
 class Game {
-    constructor(cards){
+    constructor(cards, array){
         this.cards = cards;
         this.pickedCardsDealer = [];
         this.pickedCardsPlayer = []; 
+        this.array = [];
     }
 
     shuffleCards() {
@@ -20,21 +21,53 @@ class Game {
            
             
             this.pickedCardsDealer = [this.cards[0], this.cards[2]],
-            this.pickedCardsPlayer = [this.cards[5], this.cards[8]]
+            this.pickedCardsPlayer = [this.cards[5], this.cards[8]],
+            this.thirdCardDealer = [this.cards[1]],
+            this.thirdCardPlayer = [this.cards[6]]
         }; 
 
-        return {cardsDealer:this.pickedCardsDealer, cardsPlayer: this.pickedCardsPlayer};     
+        return {cardsDealer:this.pickedCardsDealer, cardsPlayer: this.pickedCardsPlayer, card3Dealer: this.thirdCardDealer, card3Player: this.thirdCardPlayer};     
     };
 
-    checkIf21() {
-        if (card1 + card2 === 21) {
-
+    checkIf21(array) {
+        let sum = 0;
+        for (let i = 0; i < array.length; i++) {
+            sum += array[i]
         }
-
-        if (card3 + card4 === 21) {
-
+        if (sum === 21) {
+            return true;
         }
+        return false;
+    }
+
+    sumCards(array) {
+        let sum = 0;
+        for (let i = 0; i < array.length; i++) {
+            sum += array[i]
+        }
+        return sum;
     }
 
     
+    compareCards(sum1, sum2) {
+      
+        if (sum1 > sum2 && sum1 <= 21) {
+            
+            return true;
+         
+        }
+        return false;
+
+    }
+
+    endGame (){
+        setTimeout(() => {
+            document.location.reload()
+        }, 8000);
+    }
+    
+   removeButton (){
+       let button = document.querySelectorAll('.btn');
+       button.removeEventListener
+   }
 }

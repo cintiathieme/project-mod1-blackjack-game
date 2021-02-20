@@ -7,23 +7,47 @@
     </head>
 
     <body>
-        <h1>Blackjack</h1>
+        <div id="firstPage" class="show">
+            <img id="cassino" src="./images/game.png">
+            <div> <button class="play">Start Game</button></div>
+        </div>
 
-        <section>
-            <article>
-                <h3>Dealer</h3>
-                <div id="dealer"> </div>
-            </article>
+        <div id="gameBoard" class="hide">
+            
+    
+            <section>
+                <article>
+                    <h3>Dealer</h3>
+                    <div id="dealerSum"> </div>
+                    <div class="cards">
+                        <div id="dealer"> </div>
+                        <div id="dealer2"></div>
+                    </div>
+                </article>
+    
+                <article class="buttons">
+                    <button class="btn start">START</button>
+                    <div id="hit">
+                        <button class="btn hit">Hit</button>
+                    </div>
+                    <div id="stand">
+                        <button class="btn stand">Stand</button>
+                    </div>
+                    
+                </article>
+    
+                <article>
+                    <h3>Player</h3>
+                    <div id="playerSum"> </div>
+                    <div class="cards">
+                        <div id="player"></div>
+                        <div id="player2"></div>
+                    </div>
+                </article>
+            </section>
+            <div id="board"></div>
 
-            <article>
-                <img id="baralho" src="images/baralho.png" alt="baralho">
-            </article>
-
-            <article>
-                <h3>Player</h3>
-                <div id="player"></div>
-            </article>
-        </section>
+        </div>
 
         <script src="js/blackjack.js"></script>
         <script src="js/index.js"></script>
