@@ -16,7 +16,7 @@ Click 'hit' to ask for another card and click 'stand' to hold your total and end
 
 ## Prerequisites
 
-No hardware prerequisites needed. Just use your **browser**
+No hardware prerequisites needed. Just use your **browser**.
 
-* [Link] ()to run the game in your browser 
+* [Link] ()to run the game in your browser. 
 
