@@ -106,8 +106,16 @@ section {
     align-items: center;
     justify-content: center;
     border: solid 1px rgb(11, 75, 11);
-    
-    
 }
-  
+
+.winner{
+    margin-top: 50px;
+}
+
+.loser {
+    margin-top: 100px;
+    
+    height: 350px;
+    width: auto;
+}
   
