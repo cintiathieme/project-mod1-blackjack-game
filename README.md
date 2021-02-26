@@ -2,7 +2,7 @@
 
 This is a reproduction of a classic card game called Blackjack or twenty-one as part of my Web Development course at Ironhack Brazil.
 
-<img src="./images/screenshot-game.png" width="800" heigth="550" lt="screenshot-game">
+ <img src="./images/screenshot-game.png" width="600" heigth="auto"  alt="screenshot-game">
 
 ## Game rules
 
